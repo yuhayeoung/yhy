@@ -17,6 +17,8 @@ class Monster:
             self.y=520
     def draw(self):
         self.image.clip_draw(self.frame*75,0,75,75,self.x,self.y)
+
+
     def get_bb(self):
         return self.x-15,self.y-15,self.x+15,self.y+15
 

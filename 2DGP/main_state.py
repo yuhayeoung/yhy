@@ -16,7 +16,7 @@ name = "MainState"
 
 background = None
 character = None
-effect = None
+effects = []
 monster = None
 
 
@@ -24,7 +24,6 @@ def enter():
     global background,character,effect,monster
     background = Background()
     character = Character()
-    effect = Effect()
     monster = Monster()
 
 
@@ -33,7 +32,7 @@ def exit():
     global background,character,effect,monster
     del(background)
     del(character)
-    del(effect)
+    del(effects)
     del(monster)
 
 def pause():
@@ -48,7 +47,7 @@ def handle_events():
 
     global character
     global monster
-    global effect
+    global effects
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -59,8 +58,10 @@ def handle_events():
 
         else:
             character.handle_event(event)
-            effect.handle_event(event)
 
+        if event.type==SDL_KEYDOWN and event.key == SDLK_SPACE:
+            neweffects = Effect(character.x,character.y)
+            effects.append(neweffects)
 
 
 open_canvas(384,512)
@@ -70,14 +71,21 @@ open_canvas(384,512)
 def update():
    background.update()
    character.update()
-   effect.update()
+
+   for effect in effects:
+       effect.update()
+
    monster.update()
+
+
+
    hide_cursor()
 
 def draw():
     clear_canvas()
     background.draw()
-    effect.draw()
+    for effect in effects:
+        effect .draw()
     character.draw()
     monster.draw()
     update_canvas()
