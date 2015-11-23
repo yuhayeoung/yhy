@@ -5,8 +5,8 @@ from pico2d import *
 
 class Monster:
     def __init__(self):
-        self.x,self.y= random.randint(0,4)*384/5,70
-        self.number=0
+        self.x,self.y= 100,70
+        self.number='0'
         self.frame = 0
         self.image= load_image("monster_stage1.png")
 
