@@ -17,7 +17,7 @@ name = "MainState"
 background = None
 character = None
 effects = []
-monster = None
+monsters = []
 
 running = True
 global current_time
@@ -28,10 +28,11 @@ current_time = 0.0
 
 
 def enter():
-    global background,character,effect,monster
+    global background,character,effect,monsters
     background = Background()
     character = Character()
-    monster = Monster()
+    #수정 필요
+    monsters = create_monster_team()
 
 
 
@@ -39,7 +40,6 @@ def exit():
     global background,character,effect,monster
     del(background)
     del(character)
-    del(monster)
 
 def pause():
     pass
@@ -50,31 +50,41 @@ def resume():
 
 
 def create_monster_team():
-    team_data_text = '                   \
-        {                             \
-           "1" : {"x":38.4*1, "y":70},  \
-    	    "2" : {"x":38.4*3, "y":70},  \
-    	    "3" : {"x":38.4*5, "y":70},  \
-    	    "4" : {"x":38.4*7, "y":70},  \
-    	    "5" : {"x":38.4*9, "y":70}   \
-        }                             \
-    '
-    team_data = json.load(team_data_text)
 
-    team=[]
-    for number in team_data:
-        monster=Monster()
-        monster.number = number
-        monster.x= team_data[number]["x"]
-        monster.y= team_data[number]["y"]
-        team.append(monster)
+
+    team = []
+    #아몰랑 여따 하드 코딩 하시길
+    #monster(숫자 지정) = Monster()
+    #monster(지정한 숫자).set_pos(x값, y값)
+    #team.append(monster(지정한 숫자))
+    monster1=Monster()
+    monster1.set_pos(38.4*1, 900)
+    team.append(monster1)
+
+    monster2=Monster()
+    monster2.set_pos(38.4*3, 900)
+    team.append(monster2)
+
+    monster3=Monster()
+    monster3.set_pos(38.4*5, 900)
+    team.append(monster3)
+
+    monster4=Monster()
+    monster4.set_pos(38.4*7, 900)
+    team.append(monster4)
+
+    monster5=Monster()
+    monster5.set_pos(38.4*9, 900)
+    team.append(monster5)
+
+
     return team
 
 
 def handle_events():
 
     global character
-    global monster
+
     global effects
     events = get_events()
     for event in events:
@@ -87,7 +97,7 @@ def handle_events():
         else:
             character.handle_event(event)
 
-        if running==True:
+        if event.type == SDL_KEYDOWN and event.key == SDLK_a:
             neweffects = Effect(character.x,character.y)
             effects.append(neweffects)
 
@@ -112,7 +122,13 @@ def update():
        if effect.y>=500:
           effects.remove(effect)
 
-   monster.update()
+   for monster in monsters:
+        monster.update()
+
+   #몬스터 재생성 구현되면 활성화
+   #for monster in monsters:
+   #    if monster.y <=0:
+   #        monsters.remove(monster)
 
    hide_cursor()
 
@@ -127,10 +143,14 @@ def update():
 def draw():
     clear_canvas()
     background.draw()
+    character.draw()
+
     for effect in effects:
         effect .draw()
-    character.draw()
-    monster.draw()
+
+    for monster in monsters:
+        monster.draw()
+
     update_canvas()
 
 

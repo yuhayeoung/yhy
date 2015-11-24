@@ -14,9 +14,13 @@ class Monster:
         self.frame = (self.frame+1)%4
         self.y -=1
         if self.y<=-500:
-            self.y=520
+            self.y=900
     def draw(self):
         self.image.clip_draw(self.frame*75,0,75,75,self.x,self.y)
+
+    def set_pos(self, x, y):
+        self.x = x
+        self.y = y
 
 
     def get_bb(self):
