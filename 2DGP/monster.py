@@ -6,7 +6,6 @@ from pico2d import *
 class Monster:
     def __init__(self):
         self.x,self.y= 100,70
-        self.number='0'
         self.frame = 0
         self.image= load_image("monster_stage1.png")
 
@@ -24,7 +23,7 @@ class Monster:
 
 
     def get_bb(self):
-        return self.x-15,self.y-15,self.x+15,self.y+15
+        return self.x-22,self.y-25,self.x+22,self.y+25
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())

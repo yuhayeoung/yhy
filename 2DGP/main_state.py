@@ -31,7 +31,6 @@ def enter():
     global background,character,effect,monsters
     background = Background()
     character = Character()
-    #수정 필요
     monsters = create_monster_team()
 
 
@@ -53,10 +52,6 @@ def create_monster_team():
 
 
     team = []
-    #아몰랑 여따 하드 코딩 하시길
-    #monster(숫자 지정) = Monster()
-    #monster(지정한 숫자).set_pos(x값, y값)
-    #team.append(monster(지정한 숫자))
     monster1=Monster()
     monster1.set_pos(38.4*1, 900)
     team.append(monster1)
@@ -106,8 +101,17 @@ open_canvas(384,512,sync =True)
 
 
 
+def collide(a,b):
 
+    left_a,bottom_a,right_a,top_a = a.get_bb()
+    left_b,bottom_b,right_b,top_b = b.get_bb()
 
+    if left_a>right_b : return False
+    if right_a<left_b : return False
+    if top_a<bottom_b : return False
+    if bottom_a>top_b : return False
+
+    return True
 
 
 
@@ -115,21 +119,31 @@ open_canvas(384,512,sync =True)
 def update():
    background.update()
    character.update()
-   for effect in effects:
-       effect.update()
 
    for effect in effects:
-       if effect.y>=500:
+       effect.update()
+       if effect.y>=550:
           effects.remove(effect)
 
    for monster in monsters:
         monster.update()
 
+   for effect in effects:
+       for monster in monsters:
+            if collide(monster,effect):
+                print("부딪힘!")
+                effects.remove(effect)
+                monsters.remove(monster)
+
+
+
    #몬스터 재생성 구현되면 활성화
    #for monster in monsters:
-   #    if monster.y <=0:
+   #    if monster.y <=-20:
    #        monsters.remove(monster)
 
+
+   delay(0.003)
    hide_cursor()
 
    current_time = get_time()
@@ -144,12 +158,14 @@ def draw():
     clear_canvas()
     background.draw()
     character.draw()
-
+    #character.draw_bb()
     for effect in effects:
-        effect .draw()
+        effect.draw()
+        #effect.draw_bb()
 
     for monster in monsters:
         monster.draw()
+        #monster.draw_bb()
 
     update_canvas()
 

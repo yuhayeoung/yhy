@@ -5,7 +5,7 @@ from pico2d import *
 
 class Effect:
     def __init__(self,x,y):
-        self.x,self.y= x,y
+        self.x,self.y= x,y+50
         self.image= load_image("effect.png")
 
 
@@ -13,10 +13,10 @@ class Effect:
         self.y +=2
 
     def draw(self):
-        self.image.clip_draw(0,0,50,50,self.x,self.y)
+        self.image.draw(self.x,self.y)
 
     def get_bb(self):
-        return self.x-25,self.y-25,self.x+25,self.y+25
+        return self.x-20,self.y-15,self.x+20,self.y+15
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
