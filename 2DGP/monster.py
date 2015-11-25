@@ -9,6 +9,7 @@ class Monster:
         self.frame = 0
         self.image= load_image("monster_stage1.png")
 
+
     def update(self):
         self.frame = (self.frame+1)%4
         self.y -=1

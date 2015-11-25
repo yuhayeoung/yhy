@@ -22,8 +22,10 @@ monsters = []
 running = True
 global current_time
 global frame_time
+global close_game
 
 
+close_game=0
 current_time = 0.0
 
 
@@ -73,6 +75,7 @@ def create_monster_team():
     team.append(monster5)
 
 
+
     return team
 
 
@@ -89,12 +92,19 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.change_state(title_state)
 
+        #elif close_game==1:
+        #    game_framework.quit()
+
+
         else:
             character.handle_event(event)
 
         if event.type == SDL_KEYDOWN and event.key == SDLK_a:
             neweffects = Effect(character.x,character.y)
             effects.append(neweffects)
+
+
+
 
 
 open_canvas(384,512,sync =True)
@@ -116,9 +126,12 @@ def collide(a,b):
 
 
 
+
 def update():
    background.update()
    character.update()
+
+   global monsters
 
    for effect in effects:
        effect.update()
@@ -135,16 +148,20 @@ def update():
                 effects.remove(effect)
                 monsters.remove(monster)
 
+   for monster in monsters:
+       if collide(monster,character):
+                print("충돌!")
+                close_game=1
 
 
-   #몬스터 재생성 구현되면 활성화
-   #for monster in monsters:
-   #    if monster.y <=-20:
-   #        monsters.remove(monster)
+   for monster in monsters:
+       if monster.y <=-20:
+           #monsters.remove(monster)
+           monsters = create_monster_team()
 
 
-   delay(0.003)
    hide_cursor()
+
 
    current_time = get_time()
    frame_time = get_time() - current_time
@@ -158,14 +175,14 @@ def draw():
     clear_canvas()
     background.draw()
     character.draw()
-    #character.draw_bb()
+    character.draw_bb()
     for effect in effects:
         effect.draw()
-        #effect.draw_bb()
+        effect.draw_bb()
 
     for monster in monsters:
         monster.draw()
-        #monster.draw_bb()
+        monster.draw_bb()
 
     update_canvas()
 
