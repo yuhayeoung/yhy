@@ -9,6 +9,8 @@ class Effect:
         self.image= load_image("effect.png")
 
 
+
+
     def update(self):
         self.y +=2
 
@@ -20,3 +22,4 @@ class Effect:
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
+

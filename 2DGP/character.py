@@ -14,6 +14,8 @@ class Character:
         self.x,self.y=192,50
         self.frame = 0
         self.image= load_image("character.png")
+        self.make_effect_sound = load_wav("sound_effect.ogg")
+        self.make_effect_sound.set_volume(32)
 
     def update(self):
         self.frame = (self.frame+1)%4
@@ -31,3 +33,6 @@ class Character:
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
+
+    def make_effect_sound(self,effect):
+        self.make_effect_sound.play()

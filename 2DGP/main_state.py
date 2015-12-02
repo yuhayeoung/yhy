@@ -107,6 +107,7 @@ def handle_events():
 
 
 
+
 open_canvas(384,512,sync =True)
 
 
@@ -135,6 +136,7 @@ def update():
 
    for effect in effects:
        effect.update()
+
        if effect.y>=550:
           effects.remove(effect)
 
