@@ -6,16 +6,24 @@ import main_state
 name = "TitleState"
 image = None
 
+class Sound:
+    def __init__(self):
+        self.bgm = load_music("sound_start.mp3")
+        self.bgm.set_volume(30)
+        self.bgm.repeat_play()
+    def draw(self):
+        pass
+
 
 def enter():
-    global image
+    global image,sound
     image = load_image("title_page.png")
-
+    sound=Sound()
 
 def exit():
-    global image
+    global image,sound
     del(image)
-
+    del(sound)
 
 def handle_events():
     events = get_events()
@@ -32,6 +40,7 @@ def handle_events():
 def draw():
     clear_canvas()
     image.draw(192 ,256)
+    sound.draw()
     update_canvas()
 
 
