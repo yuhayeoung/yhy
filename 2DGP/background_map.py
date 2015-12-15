@@ -5,7 +5,7 @@ from pico2d import *
 class Background:
     def __init__(self):
         self.back_frame=0
-        self.image=load_image('background_stage1.png')
+        self.image=load_image('background_stage3.png')
         self.bgm = load_music("sound_bgm.mp3")
         self.bgm.set_volume(80)
         self.bgm.repeat_play()

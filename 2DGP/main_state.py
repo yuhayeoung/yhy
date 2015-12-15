@@ -152,8 +152,9 @@ def update():
 
    for monster in monsters:
        if collide(monster,character):
-                print("충돌!")
-                close_game=1
+            print("충돌!")
+            close_game=1
+            game_framework.push_state(title_state)
 
 
    for monster in monsters:
@@ -177,14 +178,13 @@ def draw():
     clear_canvas()
     background.draw()
     character.draw()
-    character.draw_bb()
     for effect in effects:
         effect.draw()
-        effect.draw_bb()
+
 
     for monster in monsters:
         monster.draw()
-        monster.draw_bb()
+
 
     update_canvas()
 
